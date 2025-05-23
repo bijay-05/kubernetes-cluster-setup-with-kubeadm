@@ -48,8 +48,6 @@ resource "azurerm_network_security_group" "testnsg" {
   tags = {
     environment = "dev"
   }
-
-
 }
 
 resource "azurerm_network_security_rule" "testnsr" {
@@ -72,7 +70,9 @@ resource "azurerm_subnet_network_security_group_association" "testsnsga" {
 }
 
 resource "azurerm_public_ip" "testip" {
-  name                = "mytestip"
+  for_each = { for k, v in var.nodes : k => v if v.public }
+
+  name                = "mytestip-${each.value.name}"
   resource_group_name = azurerm_resource_group.testrg.name
   location            = azurerm_resource_group.testrg.location
   allocation_method   = "Dynamic"
@@ -93,7 +93,7 @@ resource "azurerm_network_interface" "testnic" {
     name                          = "internal"
     subnet_id                     = azurerm_subnet.testsubnet.id
     private_ip_address_allocation = "Dynamic"
-    public_ip_address_id          = azurerm_public_ip.testip.id if each.value.public
+    public_ip_address_id          = each.value.public ? azurerm_public_ip.testip[each.key].id : null
   }
 
   tags = {
@@ -111,16 +111,12 @@ resource "azurerm_linux_virtual_machine" "testvm" {
   admin_username      = each.value.admin_username
 
   network_interface_ids = [
-    azurerm_network_interface.testnic.id,
+    azurerm_network_interface.testnic[each.key].id,
   ]
 
-  # custom_data = filebase64("./customdata.tftpl")
-
-  
-
   admin_ssh_key {
-    username   = "adminuser"
-    public_key = file("./aztf_rsa.pub")
+    username   = each.value.admin_username
+    public_key = file("./demon.pub")
   }
 
   os_disk {
@@ -134,29 +130,4 @@ resource "azurerm_linux_virtual_machine" "testvm" {
     sku       = "12"
     version   = "latest"
   }
-  connection {
-      type = "ssh"
-      user = "adminuser"
-      private_key = file("~/.ssh/aztf_rsa")
-      host = self.public_ip_address
-  }
-
-  provisioner "local-exec" {
-    command = templatefile("linux-ssh-scripts.tftpl", {
-      hostname     = self.public_ip_address,
-      user         = "adminuser",
-      identityfile = "/home/bijay/.ssh/aztf_rsa"
-    })
-    interpreter = ["bash", "-c"]
-  }
-  provisioner "file" {
-    source      = "./docker.sh"
-    destination = "setup.sh"
-  }
-  # provisioner "remote-exec" {
-  #   inline = [
-  #     "bash ~/setup.sh",
-  #     # "source ~/.bashrc" cannot perform this on script
-  #   ]
-  # }
 }
