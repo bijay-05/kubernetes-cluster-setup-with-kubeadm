@@ -1,0 +1,2 @@
+# Cluster Setup with Terraform Modules
+We have wrapped the main terraform source code to create resources in child module `modules/cluster` and are calling it in the root module in the directory. To set up cluster with default variable values ( as defined in the child module variables file ), remove the `variables.tf` and `terraform.tfvars` file in the root directory along with variable nodes in the root `main.tf` file.
