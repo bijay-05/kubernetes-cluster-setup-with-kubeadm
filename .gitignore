@@ -1,3 +1,6 @@
 infra/.terraform/*
 .terraform.*
+infra/*.tfstate
+infra/*backup
 infra/*.pub
+infra/*mon
