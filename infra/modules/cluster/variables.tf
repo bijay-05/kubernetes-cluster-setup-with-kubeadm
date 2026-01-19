@@ -4,6 +4,7 @@ variable "nodes" {
         node_size = string
         admin_username = string
         public = bool
+        custom_data_path = string
     }))
     default = {
       "node_1" = {
@@ -11,18 +12,21 @@ variable "nodes" {
         node_size = "Standard_B2s",
         admin_username = "masteruser"
         public = true
+        custom_data_path = "./master-data.sh"
       },
       "node_2" = {
         name = "node-0",
         node_size = "Standard_B1ms",
         admin_username = "workeruser"
         public = false
+        custom_data_path = "./worker-data.sh"
       },
       "node_3" = {
         name = "node-1",
         node_size = "Standard_B1ms",
         admin_username = "workeruser",
         public = false
+        custom_data_path = "./worker-data.sh"
       }
     }
 

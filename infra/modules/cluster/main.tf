@@ -1,6 +1,6 @@
 resource "azurerm_resource_group" "testrg" {
   name     = "mytestrg"
-  location = "centralindia"
+  location = "eastasia"
   tags = {
     environment = "dev"
   }
@@ -100,7 +100,7 @@ resource "azurerm_linux_virtual_machine" "testvm" {
 
   admin_ssh_key {
     username   = each.value.admin_username
-    public_key = file("path/to/public-key")
+    public_key = file("./demon.pub")
   }
 
   os_disk {
@@ -114,4 +114,6 @@ resource "azurerm_linux_virtual_machine" "testvm" {
     sku       = "12"
     version   = "latest"
   }
+
+  custom_data = base64encode(file(each.value.custom_data_path))
 }

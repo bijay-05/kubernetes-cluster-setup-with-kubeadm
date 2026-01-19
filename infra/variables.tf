@@ -4,5 +4,6 @@ variable "nodes" {
         node_size = string
         admin_username = string
         public = bool
+        custom_data_path = string
     }))
 }
