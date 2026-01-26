@@ -31,7 +31,10 @@ helm repo add cilium https://helm.cilium.io/
 helm install cilium cilium/cilium --version 1.18.5 --namespace kube-system \
 > --set kubeProxyReplacement=true \
 > --set k8sServiceHost=API_SERVER_IP \
-> --set k8sServicePort=6443
+> --set k8sServicePort=6443 \
+> --set ipam.mode=cluster-pool \
+> --set ipam.operator.clusterPoolIPv4PodCIDRList=10.244.0.0/16 \
+> --set ipam.operator.clusterPoolIPv4MaskSize=24
 
 ## uninstall cilium as a whole
 helm uninstall cilium -n kube-system
