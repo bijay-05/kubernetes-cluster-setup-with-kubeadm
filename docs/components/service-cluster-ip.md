@@ -1,5 +1,7 @@
 # Services Cluster IP
 
+[Source: KodeKloud Notes](https://notes.kodekloud.com)
+
 Cluster IP streamlines connectivity within a full-stack web application by providing a stable interface for pod-to-pod communication.
 
 A typical microservices-based application consists of several pods. Some pods host frontend web 
