@@ -13,7 +13,7 @@ For a simpler solution, many cloud platforms such as **Google Cloud Platform (GC
 
 Below is a diagram that illustrates a cloud-based voting app architecture on Google Cloud Platform. The image shows nodes, pods, deployments, and a load-balancer configured to handle the voting and result services.
 
-![](https://github.com/bijay-05/kubernetes-cluster-setup-with-kubeadm/docs/images/service-loadbalancer.jpg)
+![](../images/service-loadbalancer.jpg)
 
 > [!Warning]
 > Keep in mind, that the **LoadBalancer** service type only functions as intended on supported cloud environments. In unsupported settings - such as VirtualBox - the **LoadBalancer** type behaves like **NodePort** by exposing the service on a high port without providing external load balancing.
