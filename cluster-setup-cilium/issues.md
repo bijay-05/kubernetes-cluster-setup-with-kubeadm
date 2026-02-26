@@ -56,3 +56,8 @@ The option `ipam.operator.clusterPoolIPv4PodCIDRList=10.244.0.0/16` takes list a
 
 > [!Important]
 > Instead pass configs in file while installing cilium in the cluster with helm.
+
+## Latest Issues
+
+> [!Important]
+> I mistakenly tried to install cilium with above command, while the config file for kubectl was not present in the `~/.kube` directory. This action threw error mentioning that the cluster is unreachable.
