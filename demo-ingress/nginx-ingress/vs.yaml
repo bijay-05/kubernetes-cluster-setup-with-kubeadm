@@ -1,0 +1,15 @@
+apiVersion: k8s.nginx.org/v1
+kind: VirtualServer
+metadata:
+  name: my-app
+  namespace: default
+spec:
+  host: myapp.local
+  upstreams:
+  - name: foo-service
+    service: foo-service
+    port: 80
+  routes:
+  - path: /foo
+    action:
+      pass: foo-service
