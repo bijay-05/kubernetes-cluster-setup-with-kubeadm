@@ -21,4 +21,6 @@ curl -H "Host:myapp.demo.local" http://<NODEPORT_IP>:<PORT>/foo
 
 ## Additional References
 
+[Nginx Docs: Install nginx-ingress with Manifests](https://docs.nginx.com/nginx-ingress-controller/install/manifests/)
+
 [Nginx Docs: Ingress Path Regex Annotation](https://docs.nginx.com/nginx-ingress-controller/tutorials/ingress-path-regex-annotation/)
