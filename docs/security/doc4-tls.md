@@ -63,7 +63,7 @@ Most Kubernetes clients can load these connection parameters via a kubeconfig fi
 4. **Server-Side Certificates**
    For secure communication, both client and server certificates must trust the same CA root certificate. This certificate is used by both parties to verify the authenticity of the certificate they receive.
 
-[](../images/tls-ca-crt.jpg)
+![](../images/tls-ca-crt.jpg)
 
 ### ETCD Server Certificates
 

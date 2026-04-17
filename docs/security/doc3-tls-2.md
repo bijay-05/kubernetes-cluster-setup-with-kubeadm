@@ -21,7 +21,7 @@ Below is an overview of the main Kubernetes components and the associated certif
 
 3. **Kubelet on Worker Nodes**: On each worker node, the kubelet service exposes an HTTPS endpoint that communicates with the API server for monitoring and management. This service uses its own certificate and key pair (typically named `kubelet.crt` and `kubelet.key`).
 
-[](../images/tls-server-certs-keys.jpg)
+![](../images/tls-server-certs-keys.jpg)
 
 ## Client Components and Their Certificates
 
@@ -35,7 +35,7 @@ Several components operate as clients and require authentication when connecting
 
 4. **Kube Proxy**: Handling network routing within the cluster, the kube proxy uses a client certificate (generally named `kube-proxy.crt` and `kube-proxy.key`) for secure communications with the API server.
 
-[](../images/tls-client-certs-keys.jpg)
+![](../images/tls-client-certs-keys.jpg)
 
 ## Grouping Certificates for Enhanced Management
 
@@ -50,4 +50,4 @@ For easier certificate management, you can group TLS certificates into two main 
 
 All certificates must be signed by a Certificate Authority. Kubernetes clusters require at least one CA, though multiple CAs may be used for additional segregation (for example, one CA for general cluster services and another exclusively for ETCD). In this guide, we use a single CA for simplicity. The CA itself has a certificate and key pair, typically named `CA.crt` and `CA.key`
 
-[](../images/ca-tls.jpg)
+![](../images/ca-tls.jpg)
