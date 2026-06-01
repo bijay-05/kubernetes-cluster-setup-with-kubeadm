@@ -1,8 +1,8 @@
-# Cluter Setup with Cilium 
+# Cluter Setup with Cilium
 
 Run the scripts inside `scripts/` directory in the following order on both master and worker nodes.
 
->[!Important]
+> [!Important]
 > Don't forget to add master node's private IP address to `kubeadm.config` file. `controlPlaneEndpoint` and `advertiseAddress`
 
 ```bash
@@ -45,3 +45,7 @@ helm uninstall cilium -n kube-system
 ## verify
 kubectl get po -n kube-system
 ```
+
+## Notes
+
+- Running `cilium status` command inside the **cilium-agent DaemonSet**, it was found that `Masquerading: IPTables [IPv4: Enabled, IPv6: Disabled]` was set. Upon research, it was highlighted that when the routing mode is set to **Tunnel (VXLAN)**, Cilium may choose IPTables for Masquerading.
