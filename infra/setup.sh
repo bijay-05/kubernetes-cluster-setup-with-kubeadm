@@ -4,11 +4,19 @@ echo "Installing Tmux and Git...."
 
 apt update && apt install tmux git -y
 
-sleep 3
+sleep 2
 
-cd /home/masteruser && git clone https://github.com/bijaypachhai/dotfiles.git && cp /home/masteruser/dotfiles/ghostty/.tmux.conf /home/masteruser/.tmux.conf && rm -r /home/masteruser/dotfiles
+cd /home/masteruser && git clone https://github.com/bijaypachhai/dotfiles.git && cp /home/masteruser/dotfiles/ghostty/.tmux.conf /home/masteruser/.tmux.conf && cp /home/masteruser/dotfiles/ghostty/ghostty-info /home/masteruser/ghostty-info && rm -r /home/masteruser/dotfiles
 
-sleep 3
+sleep 2
+
+cd /home/masteruser && git clone https://github.com/bijaypachhai/kubernetes-utils && cp -r /home/masteruser/kubernetes-utils/cluster-setup home/masteruser && rm -rf /home/masteruser/kubernetes-utils
+
+sleep 2
+
+cd /home/masteruser && curl -fsSL -o get_helm.sh https://raw.githubusercontent.com/helm/helm/main/scripts/get-helm-4 && chown masteruser:masteruser /home/masteruser/get_helm.sh && chmod 700 /home/masteruser/get_helm.sh
+
+sleep 2
 
 ##==============================
 #------------PREPARATION STARTED
