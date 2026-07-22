@@ -30,3 +30,34 @@ k exec -it <podname> -c <containername> -- /bin/sh
 ## the command creates a secure tunnel from your local machine into pod, service or deployment
 k port-forward deployment/test-deployment 3002:3001
 ```
+
+## Pre Apply Steps
+
+> [!Tip]
+> Wrap following into Makefile target (make precheck)
+
+```bash
+## SEE EXACTLY WHAT WILL CHANGE
+kubectl diff -f manifest.yaml
+
+## FULL SNAPSHOT OF THE CURRENT STATE
+kubectl get all,cm,secret,ingress,pvc -n <NAMESPACE>
+
+## CATCH EXISTING WARNING/ERRORS IN THE NAMESPACE BEFORE ADDING MORE
+kubectl get events -n <NAMESPACE> --sort-by=.metadata.creationTimestamp
+
+## VALIDATE AGAINST THE API WITHOUT TOUCHING LIVE RESOURCES
+kubectl apply -f manifest.yaml --dry-run=server
+
+## CATCH YAML SCHEMA MISTAKES EARLY
+kubectl apply --validate=strict -f manifest.yaml
+
+## ENSURE REQUIRED CONFIG VALUES EXIST
+kubectl describe configmap <CM_NAME> -n <NAMESPACE>
+
+## CONFIRM THE SECRET EXISTS AND WHICH KEY IT ACTUALLY HOLDS
+kubectl get secret <NAME> -n <NAMESPACE> -o jsonpath='{.data}'
+
+## CHECK RESOURCE LIMITS WON'T BLOCK APPLY
+kubectl describe quota -n <NAMESPACE>
+```
