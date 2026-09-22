@@ -1,0 +1,66 @@
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: postgresql
+  labels:
+    app: postgres
+spec:
+  serviceName: "postgresql"
+  replicas: 1
+  selector:
+    matchLabels:
+      app: postgres
+  template:
+    metadata:
+      labels:
+        app: postgres
+    spec:
+      terminationGracePeriodSeconds: 30
+      securityContext:
+        fsGroup: 999
+      volumes:
+        - name: postgres-config
+          configMap:
+            name: postgresql-config
+        - name: pgdata
+          persistentVolumeClaim:
+            claimName: pgdata
+        - name: pglogs
+          persistentVolumeClaim:
+            claimName: pglogs
+      containers:
+        - name: postgres
+          image: postgres:16-bookworm
+          args:
+            - "-c"
+            - "config_file=/etc/postgresql/postgresql.conf"
+            - "-c"
+            - "hba_file=/etc/postgresql/pg_hba.conf"
+            - "-c"
+            - "log_directory=/mnt/postgresql-16/pglogs/logs"
+            - "-c"
+            - "data_directory=/mnt/postgresql-16/pgdata/data"
+          env:
+            - name: POSTGRES_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: postgresql-secret
+                  key: POSTGRES_PASSWORD
+            - name: PGDATA
+              value: /mnt/postgresql-16/pgdata/data
+            - name: PG_LOG
+              value: /mnt/postgresql-16/pglogs/logs
+          volumeMounts:
+            - name: pgdata
+              mountPath: /mnt/postgresql-16/pgdata
+            # - name: pgbackup
+            #   mountPath: /mnt/postgresql-16/pgbackup
+            - name: pglogs
+              mountPath: /mnt/postgresql-16/pglogs
+            # - name: pgsqlos
+            #   mountPath: /var/opt/pgsql
+            - name: postgres-config
+              mountPath: /etc/postgresql
+  podManagementPolicy: OrderedReady
+  updateStrategy:
+    type: RollingUpdate
