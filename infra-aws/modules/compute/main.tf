@@ -26,6 +26,11 @@ resource "aws_instance" "instance" {
   instance_type = each.value.instance_type
   source_dest_check = false
 
+  root_block_device {
+    volume_size = 32
+    volume_type = "gp3"
+  }
+
   user_data = file(each.value.custom_script_path)
 
   # user_data = <<EOF
