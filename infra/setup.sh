@@ -6,7 +6,7 @@ apt update && apt install tmux git -y
 
 sleep 2
 
-cd /home/masteruser && git clone https://github.com/bijaypachhai/dotfiles.git && cp /home/masteruser/dotfiles/ghostty/.tmux.conf /home/masteruser/.tmux.conf && cp /home/masteruser/dotfiles/ghostty/ghostty-info /home/masteruser/ghostty-info && rm -r /home/masteruser/dotfiles
+cd /home/masteruser && git clone https://github.com/bijaypachhai/dotfiles.git && cp /home/masteruser/dotfiles/ghostty/.tmux.conf /home/masteruser/.tmux.conf && cp /home/masteruser/dotfiles/ghostty/ghostty-info /home/masteruser/ghostty-info && cp /home/masteruser/dotfiles/bash/.bash_aliases /home/master/.bash_aliases && rm -r /home/masteruser/dotfiles
 
 sleep 2
 
